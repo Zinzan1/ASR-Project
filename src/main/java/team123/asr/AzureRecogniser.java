@@ -5,6 +5,8 @@ import com.microsoft.cognitiveservices.speech.audio.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.Semaphore;
@@ -40,6 +42,10 @@ public class AzureRecogniser {
             recognizer.recognized.addEventListener((s, e) -> {
                 if (e.getResult().getReason() == ResultReason.RecognizedSpeech) {
                     System.out.println("RECOGNIZED: Text=" + e.getResult().getText());
+
+                    List<String> list = new ArrayList<String>();
+                    list.add(e.getResult().getText());
+                    OutputWriter.writeToTxtFile("output.txt", list);
                 }
                 else if (e.getResult().getReason() == ResultReason.NoMatch) {
                     System.out.println("NOMATCH: Speech could not be recognized.");

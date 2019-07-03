@@ -4,11 +4,8 @@ package team123.asr;
 // Licensed under the MIT license. See LICENSE.md file in the project root for full license information.
 //
 
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import com.microsoft.cognitiveservices.speech.*;
-import com.microsoft.cognitiveservices.speech.audio.AudioConfig;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Quickstart: recognize speech using the Speech SDK for Java.
