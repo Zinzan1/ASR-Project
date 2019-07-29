@@ -1,14 +1,14 @@
-package team123.asr;
+package team123.asr.recognition;
 
 import com.microsoft.cognitiveservices.speech.*;
 import com.microsoft.cognitiveservices.speech.audio.*;
+import team123.asr.utils.KeyReader;
+import team123.asr.utils.OutputWriter;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.concurrent.Semaphore;
 
 public class AzureRecogniser {
@@ -27,9 +27,12 @@ public class AzureRecogniser {
         // and service region (e.g., "westus").
         SpeechConfig config = SpeechConfig.fromSubscription(SubscriptionKey, ServiceRegion);
 
+        String clean = "D:\\Uni\\2019\\Sem1\\Software project\\Speech_Corpus\\dev-clean\\LibriSpeech\\dev-clean\\777\\126732\\777-126732-0008.wav";
+        String outputClean = "output2.txt";
+
         // Create an audio stream from a wav file.
         // Replace with your own audio file name.
-        AudioConfig audioInput = AudioConfig.fromWavFileInput("D:\\Uni\\2019\\Sem1\\Software project\\sample.wav");
+        AudioConfig audioInput = AudioConfig.fromWavFileInput(clean);
 
         // Creates a speech recognizer using audio stream input.
         SpeechRecognizer recognizer = new SpeechRecognizer(config, audioInput);
@@ -45,7 +48,7 @@ public class AzureRecogniser {
 
                     List<String> list = new ArrayList<String>();
                     list.add(e.getResult().getText());
-                    OutputWriter.writeToTxtFile("output.txt", list);
+                    OutputWriter.writeToTxtFile(outputClean, list);
                 }
                 else if (e.getResult().getReason() == ResultReason.NoMatch) {
                     System.out.println("NOMATCH: Speech could not be recognized.");
