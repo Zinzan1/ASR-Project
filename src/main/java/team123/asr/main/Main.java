@@ -4,6 +4,7 @@ package team123.asr.main;
 // Licensed under the MIT license. See LICENSE.md file in the project root for full license information.
 //
 
+import team123.asr.recognition.AzureRecogniser;
 import team123.asr.utils.FFmpegCaller;
 
 import java.io.BufferedReader;
@@ -23,20 +24,20 @@ public class Main {
      * @param args Arguments are ignored in this sample.
      */
     public static void main(String[] args) {
-//        try {
-//            Thread t1 = new Thread() {
-//                public void run() {
-//                    try {
-//                        AzureRecogniser.recognitionWithAudioStreamAsync();
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    } catch (ExecutionException e) {
-//                        e.printStackTrace();
-//                    } catch (FileNotFoundException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            };
+        try {
+            Thread t1 = new Thread() {
+                public void run() {
+                    try {
+                        AzureRecogniser.recognitionWithAudioStreamAsync();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
 //            Thread t2 = new Thread() {
 //                public void run() {
 //                    try {
@@ -50,13 +51,13 @@ public class Main {
 //                    }
 //                }
 //            };
-//            t1.start();
 //            t2.start();
-//        } catch (Exception ex) {
-//            System.out.println(ex.getMessage());
-//        }
-        FFmpegCaller.FfmpegSegmentAudio("testaudio.wav", "testaudio2.wav", 0, 240);
-        FFmpegCaller.FFmpegSplitVideoFromAudio("test.mp4", "random.wav");
+            t1.start();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+//        FFmpegCaller.FfmpegSegmentAudio("testaudio.wav", "testaudio2.wav", 0, 240);
+//        FFmpegCaller.FFmpegSplitVideoFromAudio("test.mp4", "random.wav");
 
     }
 }

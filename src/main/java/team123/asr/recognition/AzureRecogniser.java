@@ -26,9 +26,11 @@ public class AzureRecogniser {
         // subscription key and service region. Replace with your own subscription key
         // and service region (e.g., "westus").
         SpeechConfig config = SpeechConfig.fromSubscription(SubscriptionKey, ServiceRegion);
+        config.requestWordLevelTimestamps();
+        config.setOutputFormat(OutputFormat.Detailed);
 
-        String clean = "D:\\Uni\\2019\\Sem1\\Software project\\Speech_Corpus\\dev-clean\\LibriSpeech\\dev-clean\\777\\126732\\777-126732-0008.wav";
-        String outputClean = "output2.txt";
+        String clean = "D:\\Uni\\2019\\Sem1\\Software project\\Speech_Corpus\\dev-clean\\LibriSpeech\\dev-clean\\777\\126732\\test.wav";
+        String outputClean = "random.txt";
 
         // Create an audio stream from a wav file.
         // Replace with your own audio file name.
@@ -39,7 +41,7 @@ public class AzureRecogniser {
         {
             // Subscribes to events.
             recognizer.recognizing.addEventListener((s, e) -> {
-                System.out.println("RECOGNIZING: Text=" + e.getResult().getText());
+                System.out.println("RECOGNIZING: Text=" + e.getResult().getText() + e.getResult().toString());
             });
 
             recognizer.recognized.addEventListener((s, e) -> {
