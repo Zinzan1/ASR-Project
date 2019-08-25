@@ -1,7 +1,13 @@
 package team123.asr.utils;
 
-public class FileSegmenter {
-    // SplitCommand = ffmpeg -i file.mkv -ss 00:00:20 -to 00:00:40 -c copy file-2.mkv
-    // TranscodeCommand = ffmpeg -i input.flac output.wav
-    // ffmpeg -i test.mp4 -f wav -vn testaudio.wav
+import java.io.File;
+
+public interface FileSegmenter {
+    /**
+     * The "segmentIntoMultipleFiles" method takes in the name of an audio file (with extension) and segments it based on the strategy chosen
+     * @param audioFile: The name of the audio file that shoud be split.
+     * @param segType: The segmentation strategy.
+     * @return: An array of type String that contains all the names of the files that were created from splitting the original.
+     */
+    public String[] segmentIntoMultipleFiles(String audioFile, SegmentationType segType);
 }

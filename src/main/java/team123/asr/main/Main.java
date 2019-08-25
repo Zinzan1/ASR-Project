@@ -4,6 +4,9 @@ package team123.asr.main;
 // Licensed under the MIT license. See LICENSE.md file in the project root for full license information.
 //
 
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Options;
 import team123.asr.recognition.AzureRecogniser;
 import team123.asr.utils.FFmpegCaller;
 
@@ -38,6 +41,8 @@ public class Main {
                     }
                 }
             };
+
+            CommandLineParser parser = new DefaultParser();
 //            Thread t2 = new Thread() {
 //                public void run() {
 //                    try {

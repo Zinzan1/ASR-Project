@@ -4,9 +4,45 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class FFmpegCaller {
+public class FFmpegCaller implements AVSplitter, FileSegmenter, VolumeDetector{
+
+    @Override
+    public String splitAudioFromVideo(String videoFile) {
+        String outFileName = videoFile + "AudioOnly";
+        FFmpegSplitVideoFromAudio(videoFile, outFileName);
+        return outFileName;
+    }
+
+    @Override
+    public String[] segmentIntoMultipleFiles(String audioFile, SegmentationType segType) {
+        String[] namesOfSplitFiles;
+        if (segType.equals(SegmentationType.NONE)) {
+            namesOfSplitFiles = new String[1];
+            namesOfSplitFiles[0] = audioFile;
+            return namesOfSplitFiles;
+        } else if (segType.equals(SegmentationType.BASIC)) {
+            //TODO Implement basic split algorithm
+            //FfmpegSegmentAudio(audioFile, );
+        } else if (segType.equals(SegmentationType.ADAPTIVE)) {
+            //TODO Implement adaptive split algorithm
+            //FfmpegSegmentAudio(audioFile, );
+        }
+
+        return new String[0];
+    }
+
+    @Override
+    public AudioFrameInfo[] generateVolumeInfo(String audioFile) {
+        //TODO refactor this method to put data inot correct output format
+        AudioFrameInfo[] audioInfo = new AudioFrameInfo[0];
+        FFmpegGetVolumeInfoFromAudio(audioFile);
+        return audioInfo;
+    }
+
     public static void FfmpegSegmentAudio(String inputFileName, String outputFileName, int startTimeSeconds, int endTimeSeconds) {
         String SplitCommand = "ffmpeg -i " + inputFileName  + " -ss " + startTimeSeconds + " -to " + endTimeSeconds + " -c copy " + outputFileName;
         List<String> params = java.util.Arrays.asList("ffmpeg", "-i", inputFileName, "-ss", startTimeSeconds+"", "-to", endTimeSeconds+"", "-c", "copy", outputFileName);
@@ -19,8 +55,17 @@ public class FFmpegCaller {
         callCommandDisplayingOutput(params);
     }
 
-    public static void FFmpegConvert(String audioFile) {
-        //ffmpeg -i input.flac output.wav
+    public static void FFmpegConvert(String inputFileName) {
+        String SeparateCommand = "ffmpeg -i input.flac output.wav";
+        String outputFileName = "output.wav";
+        List<String> params = java.util.Arrays.asList("ffmpeg", "-i", inputFileName, outputFileName);
+        callCommandDisplayingOutput(params);
+    }
+
+    public static void FFmpegGetVolumeInfoFromAudio(String inputFileName){
+        String SeparateCommand = "ffmpeg -i 777-126732-0005.flac -af astats=metadata=1:reset=1,ametadata=print:key=lavfi.astats.Overall.RMS_level: -f null -";
+        List<String> params = java.util.Arrays.asList("ffmpeg", "-i", inputFileName, "-af", "astats=metadata=1:reset=1,ametadata=print:key=lavfi.astats.Overall.RMS_level:", "-f", null, "-");
+        callCommandDisplayingOutput(params);
     }
 
     private static void callCommandDisplayingOutput(List command) {

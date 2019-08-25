@@ -39,6 +39,14 @@
       <artifactId>client-sdk</artifactId>
       <version>1.6.0</version>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/commons-cli/commons-cli -->
+    <dependency>
+      <groupId>commons-cli</groupId>
+      <artifactId>commons-cli</artifactId>
+      <version>1.4</version>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -85,5 +93,12 @@
         </plugin>
       </plugins>
     </pluginManagement>
+
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <targetPath>${project.build.directory}/classes/resources</targetPath>
+      </resource>
+    </resources>
   </build>
 </project>
